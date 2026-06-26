@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Structured DSA Learning — dsa.voiddev.in</title>
+  <meta name="description" content="Topic-by-topic Data Structures and Algorithms learning path with personal templates, common mistakes, and solved problems.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #070913;
+      --bg-secondary: #0d1124;
+      --bg-card: #12162e;
+      --bg-card-hover: #181d3d;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.4);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+      --easy: #10b981;
+      --medium: #f59e0b;
+      --hard: #ef4444;
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Ambient background glows */
+    .bg-glows {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(150px);
+      opacity: 0.15;
+    }
+
+    .blob-1 {
+      top: 10%;
+      right: 10%;
+      width: 40vw;
+      height: 40vw;
+      background: radial-gradient(circle, #6366f1, #3b82f6);
+    }
+
+    /* Header */
+    header {
+      background: rgba(7, 9, 19, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 1.3rem;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      z-index: 10;
+      flex: 1;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 99px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Curriculum Grid */
+    .curriculum {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .topic-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.25rem;
+      transition: var(--transition);
+    }
+
+    .topic-section:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.05);
+    }
+
+    .topic-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1rem;
+    }
+
+    .topic-title-wrap h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .topic-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
+    .topic-solved-badge {
+      font-size: 0.8rem;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--easy);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .topic-desc {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Subsection grid */
+    .section-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sub-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .sub-box h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sub-box p, .sub-box ul {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .sub-box ul {
+      padding-left: 1.25rem;
+    }
+
+    .sub-box li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Code Template box */
+    .code-template {
+      background: #090b14;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .code-template pre {
+      color: #94a3b8;
+    }
+
+    .code-keyword { color: #f472b6; }
+    .code-fn { color: #38bdf8; }
+    .code-comment { color: #64748b; font-style: italic; }
+
+    /* Related Problems */
+    .problems-list {
+      margin-top: 1.5rem;
+    }
+
+    .problems-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .problem-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: var(--transition);
+      margin-bottom: 0.5rem;
+    }
+
+    .problem-link:hover {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: var(--border-hover);
+    }
+
+    .problem-meta-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .diff-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .diff-pill.easy {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--easy);
+    }
+
+    .diff-pill.medium {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--medium);
+    }
+
+    .problem-name {
+      font-weight: 500;
+    }
+
+    .arrow-right {
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .problem-link:hover .arrow-right {
+      color: var(--accent);
+      transform: translateX(3px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      background: #090b14;
+      z-index: 10;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glows" aria-hidden="true">
+    <div class="glow-blob blob-1"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="https://voiddev.in" class="logo">voiddev<span>.dsa</span></a>
+      <nav class="nav-links">
+        <a href="https://voiddev.in">Hub</a>
+        <a href="https://info.voiddev.in">Portfolio</a>
+        <a href="https://leetx.voiddev.in">LeetCode</a>
+        <a href="https://learn-langchain.voiddev.in">AI Agents</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <section class="hero">
+      <span class="hero-badge">DSA STUDY PLAN</span>
+      <h1>Structured DSA Guide</h1>
+      <p>My personal topic-by-topic learning path. Focused on recognizing patterns, writing clean code templates, and avoiding common mistakes.</p>
+    </section>
+
+    <!-- Topic Curriculum -->
+    <div class="curriculum">
+      
+      <!-- Topic 1: Arrays & Prefix Sums -->
+      <section class="topic-section">
+        <div class="topic-header">
+          <div class="topic-title-wrap">
+            <h2>Arrays &amp; Prefix Sums</h2>
+            <div class="topic-meta">Topic 01 • Accumulators &amp; Offsets</div>
+          </div>
+          <span class="topic-solved-badge">1 Solved</span>
+        </div>
+        <p class="topic-desc">
+          Prefix sums are an essential tool for O(1) query-based subarray computations. By storing cumulative values, we can answer range sum queries in constant time.
+        </p>
+
+        <div class="section-grid">
+          <div class="sub-box">
+            <h4>🔍 Recognition Pattern</h4>
+            <p>Use this when asked for sum or differences of subarrays, especially if you need to calculate left-side vs right-side cumulative totals repeatedly.</p>
+          </div>
+          <div class="sub-box">
+            <h4>⚠️ Common Pitfalls</h4>
+            <ul>
+              <li>Index out of bounds on margins (use sizes of N+1 or handle index 0 explicitly).</li>
+              <li>Neglecting off-by-one calculations on left/right boundaries.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-template">
+          <span class="code-comment"># Prefix Sum Computation Template</span><br>
+          <span class="code-keyword">def</span> <span class="code-fn">compute_prefix_sums</span>(nums):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;n = <span class="code-fn">len</span>(nums)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;prefix = [0] * (n + 1)<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-fn">range</span>(n):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prefix[i + 1] = prefix[i] + nums[i]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> prefix
+        </div>
+
+        <div class="problems-list">
+          <div class="problems-title">Solved Explanations</div>
+          <a href="https://leetx.voiddev.in/problemsExplained/2574LeftAndRightSumDifferences.html" class="problem-link" target="_blank">
+            <div class="problem-meta-cell">
+              <span class="diff-pill medium">Medium</span>
+              <span class="problem-name">2574. Left and Right Sum Differences</span>
+            </div>
+            <span class="arrow-right">&rarr;</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Topic 2: Two Pointers & Sorting -->
+      <section class="topic-section">
+        <div class="topic-header">
+          <div class="topic-title-wrap">
+            <h2>Two Pointers &amp; Sorting</h2>
+            <div class="topic-meta">Topic 02 • Sliding &amp; Converging Bounds</div>
+          </div>
+          <span class="topic-solved-badge">1 Solved</span>
+        </div>
+        <p class="topic-desc">
+          Sorting the array simplifies many search problems, enabling two converging pointers to sweep from opposite directions to locate elements satisfying constraints (e.g. sums) in O(N) time.
+        </p>
+
+        <div class="section-grid">
+          <div class="sub-box">
+            <h4>🔍 Recognition Pattern</h4>
+            <p>Look for terms like "triplet sum", "pair sum", "find three numbers", or search problems in sorted inputs where elements can be skipped to avoid duplicate comparisons.</p>
+          </div>
+          <div class="sub-box">
+            <h4>⚠️ Common Pitfalls</h4>
+            <ul>
+              <li>Forgetting to sort the array first.</li>
+              <li>Including duplicate elements in the results (always increment pointers past duplicate values).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-template">
+          <span class="code-comment"># Converging Two-Pointer Template</span><br>
+          nums.<span class="code-fn">sort</span>()<br>
+          left, right = 0, <span class="code-fn">len</span>(nums) - 1<br>
+          <span class="code-keyword">while</span> left &lt; right:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;curr_sum = nums[left] + nums[right]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> curr_sum == target:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Match found!</span><br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left += 1<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> curr_sum &lt; target:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left += 1<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right -= 1
+        </div>
+
+        <div class="problems-list">
+          <div class="problems-title">Solved Explanations</div>
+          <a href="https://leetx.voiddev.in/problemsExplained/153sum.html" class="problem-link" target="_blank">
+            <div class="problem-meta-cell">
+              <span class="diff-pill medium">Medium</span>
+              <span class="problem-name">15. 3Sum</span>
+            </div>
+            <span class="arrow-right">&rarr;</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Placeholder Topics for future weeks -->
+      <section class="topic-section" style="opacity: 0.6;">
+        <div class="topic-header">
+          <div class="topic-title-wrap">
+            <h2>Sliding Window</h2>
+            <div class="topic-meta">Topic 03 • Subarray Bounds</div>
+          </div>
+          <span class="topic-solved-badge" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">Locked</span>
+        </div>
+        <p class="topic-desc">Coming next week! Learn how to optimize nested O(N²) loops into a linear O(N) sweep by maintaining dynamic window boundaries.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 voiddev. Built with ❤️ and pair-programmed with <a href="https://deepmind.google" target="_blank">Antigravity</a>.</p>
+  </footer>
+
+</body>
+</html>
