@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prefix Sum + Hash Map | Structured DSA Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Sora:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../learn.css">
+</head>
+<body>
+
+  <!-- Top Mobile Bar -->
+  <header class="mobile-header">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+    <a href="../index.html" class="mobile-brand">dsa.voiddev.in</a>
+    <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Left Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="sidebar-brand">
+        <span class="dot"></span>
+        dsa.voiddev.in
+      </a>
+      <div class="sidebar-search">
+        <input type="text" placeholder="Search topics…" id="searchInput" aria-label="Search topics">
+        <span class="shortcut-hint">⌘K</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+      <!-- DSA Patterns -->
+      <div class="nav-group" data-group="dsa">
+        <button class="nav-group-title" onclick="toggleGroup(this)">
+          DSA Patterns
+          <span class="chevron">▾</span>
+        </button>
+        <ul class="nav-items">
+
+          <!-- 01 · Prefix Sum -->
+          <li class="nav-topic" data-topic-group="prefix-sum">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Prefix Sum
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="basic-prefix-sum.html" data-subtopic="basic-prefix-sum">Basic Prefix Sum</a></li>
+              <li class="nav-item"><a href="prefix-sum-with-hashmap.html" data-subtopic="prefix-sum-with-hashmap">Prefix Sum + Hash Map</a></li>
+              <li class="nav-item"><a href="2d-prefix-sum.html" data-subtopic="2d-prefix-sum">2D Prefix Sum</a></li>
+              <li class="nav-item"><a href="difference-array.html" data-subtopic="difference-array">Difference Array</a></li>
+            </ul>
+          </li>
+
+          <!-- 02 · Two Pointers -->
+          <li class="nav-topic collapsed" data-topic-group="two-pointers">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Two Pointers
+              <span class="method-count">4</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">Two Sum / Pair Sum</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">3Sum</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">Subarray with Target Sum</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">Container With Most Water</a></li>
+            </ul>
+          </li>
+
+          <!-- 03 · Sliding Window -->
+          <li class="nav-topic collapsed" data-topic-group="sliding-window">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Sliding Window
+              <span class="method-count">4</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Fixed Window Size</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Dynamic Window Size</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Longest Substring Search</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Permutation / Anagrams</a></li>
+            </ul>
+          </li>
+
+          <!-- 04 · Fast & Slow Pointers -->
+          <li class="nav-topic collapsed" data-topic-group="fast-slow-pointers">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Fast &amp; Slow Pointers
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=fast-slow-pointers" class="sub-upcoming">Linked List Cycle Detection</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=fast-slow-pointers" class="sub-upcoming">Middle of Linked List</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=fast-slow-pointers" class="sub-upcoming">Finding Cycle Start</a></li>
+            </ul>
+          </li>
+
+          <!-- 05 · Linked List Reversal -->
+          <li class="nav-topic collapsed" data-topic-group="ll-reversal">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Linked List Reversal
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=ll-reversal" class="sub-upcoming">Reverse Entire List</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=ll-reversal" class="sub-upcoming">Reverse Sub-list</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=ll-reversal" class="sub-upcoming">Reverse in K-Groups</a></li>
+            </ul>
+          </li>
+
+          <!-- 06 · Monotonic Stack -->
+          <li class="nav-topic collapsed" data-topic-group="monotonic-stack">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Monotonic Stack
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=monotonic-stack" class="sub-upcoming">Next Greater Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=monotonic-stack" class="sub-upcoming">Next Smaller Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=monotonic-stack" class="sub-upcoming">Stock Span Problem</a></li>
+            </ul>
+          </li>
+
+          <!-- 07 · Top K Elements -->
+          <li class="nav-topic collapsed" data-topic-group="top-k">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Top K Elements
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=top-k" class="sub-upcoming">Kth Largest Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=top-k" class="sub-upcoming">K Closest Points</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=top-k" class="sub-upcoming">Top K Frequent Elements</a></li>
+            </ul>
+          </li>
+
+          <!-- 08 · Overlapping Intervals -->
+          <li class="nav-topic collapsed" data-topic-group="overlapping-intervals">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Overlapping Intervals
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=overlapping-intervals" class="sub-upcoming">Merge Intervals</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=overlapping-intervals" class="sub-upcoming">Insert Interval</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=overlapping-intervals" class="sub-upcoming">Interval List Intersections</a></li>
+            </ul>
+          </li>
+
+          <!-- 09 · Modified Binary Search -->
+          <li class="nav-topic collapsed" data-topic-group="binary-search">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Modified Binary Search
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=binary-search" class="sub-upcoming">Search in Rotated Array</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=binary-search" class="sub-upcoming">First/Last Position of Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=binary-search" class="sub-upcoming">Search in Matrix</a></li>
+            </ul>
+          </li>
+
+          <!-- 10 · Binary Tree Traversal -->
+          <li class="nav-topic collapsed" data-topic-group="tree-traversal">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Binary Tree Traversal
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=tree-traversal" class="sub-upcoming">In-order / Pre-order / Post-order</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=tree-traversal" class="sub-upcoming">Level Order Traversal</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=tree-traversal" class="sub-upcoming">Vertical Order Traversal</a></li>
+            </ul>
+          </li>
+
+          <!-- 11 · Depth First Search (DFS) -->
+          <li class="nav-topic collapsed" data-topic-group="dfs">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Depth First Search (DFS)
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=dfs" class="sub-upcoming">Path Sum III</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dfs" class="sub-upcoming">Lowest Common Ancestor</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dfs" class="sub-upcoming">Max Path Sum</a></li>
+            </ul>
+          </li>
+
+          <!-- 12 · Breadth First Search (BFS) -->
+          <li class="nav-topic collapsed" data-topic-group="bfs">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Breadth First Search (BFS)
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=bfs" class="sub-upcoming">Word Ladder</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=bfs" class="sub-upcoming">Shortest Path in Binary Matrix</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=bfs" class="sub-upcoming">Min Depth of Binary Tree</a></li>
+            </ul>
+          </li>
+
+          <!-- 13 · Matrix Traversal -->
+          <li class="nav-topic collapsed" data-topic-group="matrix">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Matrix Traversal
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=matrix" class="sub-upcoming">Number of Islands</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=matrix" class="sub-upcoming">Rotting Oranges</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=matrix" class="sub-upcoming">Spiral Matrix</a></li>
+            </ul>
+          </li>
+
+          <!-- 14 · Backtracking -->
+          <li class="nav-topic collapsed" data-topic-group="backtracking">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Backtracking
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=backtracking" class="sub-upcoming">Permutations / Subsets</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=backtracking" class="sub-upcoming">N-Queens Problem</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=backtracking" class="sub-upcoming">Sudoku Solver</a></li>
+            </ul>
+          </li>
+
+          <!-- 15 · Dynamic Programming (DP) -->
+          <li class="nav-topic collapsed" data-topic-group="dp">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Dynamic Programming (DP)
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=dp" class="sub-upcoming">0/1 Knapsack Problem</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dp" class="sub-upcoming">Longest Common Subsequence</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dp" class="sub-upcoming">Memoization vs Tabulation</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-row">
+        <a href="../index.html" class="back-link">← Overview</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+      </div>
+      <div style="font-size: 10px; color: var(--text-muted); line-height: 1.4; margin-top: 0.25rem;">
+        This guide is an active work-in-progress and may contain mistakes. If you spot one, please report it at <a href="mailto:report@voiddev.in" style="color: var(--accent); text-decoration: none;">report@voiddev.in</a>
+      </div>
+      <div style="font-size: 10px; color: var(--text-muted); line-height: 1.4; margin-top: 0.15rem;">
+        Got suggestions or think my code is garbage? Roast it at <a href="mailto:suggestions@voiddev.in" style="color: var(--accent); text-decoration: none;">suggestions@voiddev.in</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right TOC Panel -->
+  <aside class="toc-panel" id="tocPanel">
+    <div class="toc-title">ON THIS PAGE</div>
+    <ul class="toc-list" id="tocList">
+      <!-- populated dynamically -->
+    </ul>
+  </aside>
+
+  <!-- Layout Wrapper -->
+  <div class="layout-container">
+    <div class="layout-main">
+      <main class="content-area">
+        
+        <article class="topic-article" id="topic-prefix-sum">
+
+          <!-- Sub-topic 2: Prefix Sum + Hash Map -->
+          <div class="subtopic-page" id="page-prefix-sum-with-hashmap">
+            <h1 class="topic-title">Prefix Sum + Hash Map</h1>
+            <div class="meta-row">
+              <span class="meta-item">Upcoming</span>
+              <span class="meta-sep">·</span>
+              <span class="difficulty-pill medium">Medium</span>
+            </div>
+
+            <p class="hook">
+              Here's where prefix sums get really interesting. Combine them with a hash map and you can solve problems like "count subarrays that sum to <code>k</code>" in linear time. The idea: if the current prefix sum minus <code>k</code> has appeared before, then there's a subarray ending here that sums to exactly <code>k</code>.
+            </p>
+
+            <div class="content-body">
+              <div class="section-divider"></div>
+              <p>
+                Combine prefix sums with a hash map to search for target sums in linear time. The key is to track prefix sums seen so far, checking if the current prefix sum minus target <code>k</code> has already occurred.
+              </p>
+              <div class="callout note">
+                <div class="callout-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.15rem;"><rect width="8" height="8" x="3" y="3" rx="2"/><rect width="8" height="8" x="13" y="3" rx="2"/><rect width="8" height="8" x="3" y="13" rx="2"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
+                  Active Learning &amp; Documentation
+                </div>
+                <p>
+                  Work-in-progress: I am actively studying and documenting the Prefix Sum + Hash Map pattern. The guide will be published once complete.
+                </p>
+              </div>
+            </div>
+
+            <!-- Bottom Page Navigation -->
+            <div class="page-navigation">
+              <a href="basic-prefix-sum.html" class="page-nav-prev">
+                <span class="nav-label">← Previous</span>
+                <span class="nav-title">Basic Prefix Sum</span>
+              </a>
+              <a href="2d-prefix-sum.html" class="page-nav-next">
+                <span class="nav-label">Next</span>
+                <span class="nav-title">2D Prefix Sum →</span>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../learn.js"></script>
+</body>
+</html>

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Prefix Sum | Structured DSA Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Sora:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../learn.css">
+</head>
+<body>
+
+  <!-- Top Mobile Bar -->
+  <header class="mobile-header">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+    <a href="../index.html" class="mobile-brand">dsa.voiddev.in</a>
+    <button class="theme-toggle" id="themeToggleMobile" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+  </header>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Left Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="../index.html" class="sidebar-brand">
+        <span class="dot"></span>
+        dsa.voiddev.in
+      </a>
+      <div class="sidebar-search">
+        <input type="text" placeholder="Search topics…" id="searchInput" aria-label="Search topics">
+        <span class="shortcut-hint">⌘K</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+      <!-- DSA Patterns -->
+      <div class="nav-group" data-group="dsa">
+        <button class="nav-group-title" onclick="toggleGroup(this)">
+          DSA Patterns
+          <span class="chevron">▾</span>
+        </button>
+        <ul class="nav-items">
+
+          <!-- 01 · Prefix Sum -->
+          <li class="nav-topic" data-topic-group="prefix-sum">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Prefix Sum
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="basic-prefix-sum.html" data-subtopic="basic-prefix-sum">Basic Prefix Sum</a></li>
+              <li class="nav-item"><a href="prefix-sum-with-hashmap.html" data-subtopic="prefix-sum-with-hashmap">Prefix Sum + Hash Map</a></li>
+              <li class="nav-item"><a href="2d-prefix-sum.html" data-subtopic="2d-prefix-sum">2D Prefix Sum</a></li>
+              <li class="nav-item"><a href="difference-array.html" data-subtopic="difference-array">Difference Array</a></li>
+            </ul>
+          </li>
+
+          <!-- 02 · Two Pointers -->
+          <li class="nav-topic collapsed" data-topic-group="two-pointers">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Two Pointers
+              <span class="method-count">4</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">Two Sum / Pair Sum</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">3Sum</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">Subarray with Target Sum</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=two-pointers" class="sub-upcoming">Container With Most Water</a></li>
+            </ul>
+          </li>
+
+          <!-- 03 · Sliding Window -->
+          <li class="nav-topic collapsed" data-topic-group="sliding-window">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Sliding Window
+              <span class="method-count">4</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Fixed Window Size</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Dynamic Window Size</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Longest Substring Search</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=sliding-window" class="sub-upcoming">Permutation / Anagrams</a></li>
+            </ul>
+          </li>
+
+          <!-- 04 · Fast & Slow Pointers -->
+          <li class="nav-topic collapsed" data-topic-group="fast-slow-pointers">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Fast &amp; Slow Pointers
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=fast-slow-pointers" class="sub-upcoming">Linked List Cycle Detection</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=fast-slow-pointers" class="sub-upcoming">Middle of Linked List</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=fast-slow-pointers" class="sub-upcoming">Finding Cycle Start</a></li>
+            </ul>
+          </li>
+
+          <!-- 05 · Linked List Reversal -->
+          <li class="nav-topic collapsed" data-topic-group="ll-reversal">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Linked List Reversal
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=ll-reversal" class="sub-upcoming">Reverse Entire List</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=ll-reversal" class="sub-upcoming">Reverse Sub-list</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=ll-reversal" class="sub-upcoming">Reverse in K-Groups</a></li>
+            </ul>
+          </li>
+
+          <!-- 06 · Monotonic Stack -->
+          <li class="nav-topic collapsed" data-topic-group="monotonic-stack">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Monotonic Stack
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=monotonic-stack" class="sub-upcoming">Next Greater Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=monotonic-stack" class="sub-upcoming">Next Smaller Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=monotonic-stack" class="sub-upcoming">Stock Span Problem</a></li>
+            </ul>
+          </li>
+
+          <!-- 07 · Top K Elements -->
+          <li class="nav-topic collapsed" data-topic-group="top-k">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Top K Elements
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=top-k" class="sub-upcoming">Kth Largest Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=top-k" class="sub-upcoming">K Closest Points</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=top-k" class="sub-upcoming">Top K Frequent Elements</a></li>
+            </ul>
+          </li>
+
+          <!-- 08 · Overlapping Intervals -->
+          <li class="nav-topic collapsed" data-topic-group="overlapping-intervals">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Overlapping Intervals
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=overlapping-intervals" class="sub-upcoming">Merge Intervals</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=overlapping-intervals" class="sub-upcoming">Insert Interval</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=overlapping-intervals" class="sub-upcoming">Interval List Intersections</a></li>
+            </ul>
+          </li>
+
+          <!-- 09 · Modified Binary Search -->
+          <li class="nav-topic collapsed" data-topic-group="binary-search">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Modified Binary Search
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=binary-search" class="sub-upcoming">Search in Rotated Array</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=binary-search" class="sub-upcoming">First/Last Position of Element</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=binary-search" class="sub-upcoming">Search in Matrix</a></li>
+            </ul>
+          </li>
+
+          <!-- 10 · Binary Tree Traversal -->
+          <li class="nav-topic collapsed" data-topic-group="tree-traversal">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Binary Tree Traversal
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=tree-traversal" class="sub-upcoming">In-order / Pre-order / Post-order</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=tree-traversal" class="sub-upcoming">Level Order Traversal</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=tree-traversal" class="sub-upcoming">Vertical Order Traversal</a></li>
+            </ul>
+          </li>
+
+          <!-- 11 · Depth First Search (DFS) -->
+          <li class="nav-topic collapsed" data-topic-group="dfs">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Depth First Search (DFS)
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=dfs" class="sub-upcoming">Path Sum III</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dfs" class="sub-upcoming">Lowest Common Ancestor</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dfs" class="sub-upcoming">Max Path Sum</a></li>
+            </ul>
+          </li>
+
+          <!-- 12 · Breadth First Search (BFS) -->
+          <li class="nav-topic collapsed" data-topic-group="bfs">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Breadth First Search (BFS)
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=bfs" class="sub-upcoming">Word Ladder</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=bfs" class="sub-upcoming">Shortest Path in Binary Matrix</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=bfs" class="sub-upcoming">Min Depth of Binary Tree</a></li>
+            </ul>
+          </li>
+
+          <!-- 13 · Matrix Traversal -->
+          <li class="nav-topic collapsed" data-topic-group="matrix">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Matrix Traversal
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=matrix" class="sub-upcoming">Number of Islands</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=matrix" class="sub-upcoming">Rotting Oranges</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=matrix" class="sub-upcoming">Spiral Matrix</a></li>
+            </ul>
+          </li>
+
+          <!-- 14 · Backtracking -->
+          <li class="nav-topic collapsed" data-topic-group="backtracking">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Backtracking
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=backtracking" class="sub-upcoming">Permutations / Subsets</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=backtracking" class="sub-upcoming">N-Queens Problem</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=backtracking" class="sub-upcoming">Sudoku Solver</a></li>
+            </ul>
+          </li>
+
+          <!-- 15 · Dynamic Programming (DP) -->
+          <li class="nav-topic collapsed" data-topic-group="dp">
+            <button class="nav-topic-btn" onclick="toggleTopic(this)">
+              Dynamic Programming (DP)
+              <span class="method-count">3</span>
+              <span class="topic-chevron">▾</span>
+            </button>
+            <ul class="nav-topic-children">
+              <li class="nav-item"><a href="../coming-soon.html?topic=dp" class="sub-upcoming">0/1 Knapsack Problem</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dp" class="sub-upcoming">Longest Common Subsequence</a></li>
+              <li class="nav-item"><a href="../coming-soon.html?topic=dp" class="sub-upcoming">Memoization vs Tabulation</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-row">
+        <a href="../index.html" class="back-link">← Overview</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+      </div>
+      <div style="font-size: 10px; color: var(--text-muted); line-height: 1.4; margin-top: 0.25rem;">
+        This guide is an active work-in-progress and may contain mistakes. If you spot one, please report it at <a href="mailto:report@voiddev.in" style="color: var(--accent); text-decoration: none;">report@voiddev.in</a>
+      </div>
+      <div style="font-size: 10px; color: var(--text-muted); line-height: 1.4; margin-top: 0.15rem;">
+        Got suggestions or think my code is garbage? Roast it at <a href="mailto:suggestions@voiddev.in" style="color: var(--accent); text-decoration: none;">suggestions@voiddev.in</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right TOC Panel -->
+  <aside class="toc-panel" id="tocPanel">
+    <div class="toc-title">ON THIS PAGE</div>
+    <ul class="toc-list" id="tocList">
+      <!-- populated dynamically -->
+    </ul>
+  </aside>
+
+  <!-- Layout Wrapper -->
+  <div class="layout-container">
+    <div class="layout-main">
+      <main class="content-area">
+        
+        <article class="topic-article" id="topic-prefix-sum">
+
+          <!-- Sub-topic 1: Basic Prefix Sum -->
+          <div class="subtopic-page" id="page-basic-prefix-sum">
+            <h1 class="topic-title">Basic Prefix Sum</h1>
+            <div class="meta-row">
+              <span class="meta-item">Jun 27, 2026</span>
+              <span class="meta-sep">·</span>
+              <span class="meta-item">10 min read</span>
+              <span class="meta-sep">·</span>
+              <span class="difficulty-pill beginner">Beginner</span>
+            </div>
+
+            <p class="hook">
+              Prefix sums are one of those ideas that seem almost too simple to be useful - until you realize half the "hard" array problems on LeetCode boil down to them. The core insight is dead simple: pre-compute cumulative sums once, then answer any range query in constant time. Once this pattern clicks, you'll start recognizing it everywhere.
+            </p>
+
+            <div class="content-body">
+              <div class="section-divider"></div>
+              
+              <h2 id="what-is-prefix-sum">What is a Prefix Sum?</h2>
+              <p>
+                A prefix sum array is a derived array where each element at index <code>i</code> stores the sum of all elements from the original array from index <code>0</code> up to <code>i</code>. Think of it as a running total - at each position, you know the cumulative sum of everything before it.
+              </p>
+
+              <h3 id="the-mental-model">The mental model</h3>
+              <p>
+                Imagine you're tracking your bank balance over time. Each day's balance already includes all previous deposits and withdrawals. If you want to know how much you spent between Tuesday and Friday, you don't go back and add up each day - you just subtract Tuesday's balance from Friday's. That's a prefix sum in action.
+              </p>
+              <p>
+                Given an array <code>nums = [2, 4, 1, 3, 5]</code>, the prefix sum array is <code>[0, 2, 6, 7, 10, 15]</code>. Notice it's one element longer - that leading <code>0</code> is intentional and saves you from a bunch of edge-case headaches.
+              </p>
+
+              <div class="section-divider"></div>
+
+              <h2 id="building-the-prefix-array">Building the Prefix Array</h2>
+              <p>
+                The construction is straightforward. You create a new array of size <code>n + 1</code> (where <code>n</code> is the length of the input), initialize the first element to <code>0</code>, and fill in each subsequent position by adding the current element to the previous prefix sum.
+              </p>
+
+              <div class="code-block">
+                <div class="code-block-header">
+                  <span class="code-block-lang">Python</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <span class="copy-icon">⧉</span> Copy
+                  </button>
+                </div>
+                <pre><code>def build_prefix_sum(nums):
+    n = len(nums)
+    prefix = [0] * (n + 1)
+
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + nums[i]
+
+    return prefix
+
+# Example
+nums = [2, 4, 1, 3, 5]
+print(build_prefix_sum(nums))
+# Output: [0, 2, 6, 7, 10, 15]</code></pre>
+              </div>
+
+              <!-- Interactive Visualizer -->
+              <div class="visualizer-container">
+                <div class="visualizer-header">
+                  <span class="visualizer-title">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent); margin-right: 0.15rem;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Interactive Prefix Sum Visualizer
+                  </span>
+                  <div class="visualizer-tabs">
+                    <button class="visualizer-tab-btn active" id="tabBuild" onclick="setVisualizerMode('build')">Build Prefix Array</button>
+                    <button class="visualizer-tab-btn" id="tabQuery" onclick="setVisualizerMode('query')">Query Range Sum</button>
+                  </div>
+                </div>
+
+                <div class="visualizer-workspace">
+                  <!-- Original Array Row -->
+                  <div class="array-row">
+                    <div class="array-label">nums</div>
+                    <div class="array-cells" id="vizNumsCells">
+                      <!-- Rendered dynamically -->
+                    </div>
+                  </div>
+
+                  <!-- Spacer to look nice -->
+                  <div style="height: 10px;"></div>
+
+                  <!-- Prefix Array Row -->
+                  <div class="array-row">
+                    <div class="array-label">prefix</div>
+                    <div class="array-cells" id="vizPrefixCells">
+                      <!-- Rendered dynamically -->
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Explanation Area -->
+                <div class="formula-explanation" id="vizExplanation">
+                  Set your input array and click "Step Forward" to build the prefix sum array index by index.
+                </div>
+
+                <!-- Controls Area -->
+                <div class="visualizer-controls">
+                  <!-- Left side: setup / Inputs -->
+                  <div class="input-setup-row" id="vizInputSetup">
+                    <span style="font-size: 13px; color: var(--text-muted);">Array:</span>
+                    <input type="text" value="2, 4, 1, 3, 5" class="array-input" id="vizArrayInput" onchange="initializeVisualizer()">
+                    <button class="btn-sec" onclick="initializeVisualizer()">Reset</button>
+                  </div>
+
+                  <!-- Query inputs (hidden by default) -->
+                  <div class="query-selector" id="vizQuerySelector" style="display: none;">
+                    <span>Query Range:</span>
+                    <label>i (Start):
+                      <select class="select-idx" id="selectI" onchange="runRangeQuery()">
+                        <!-- options populated dynamically -->
+                      </select>
+                    </label>
+                    <label style="margin-left: 0.5rem;">j (End):
+                      <select class="select-idx" id="selectJ" onchange="runRangeQuery()">
+                        <!-- options populated dynamically -->
+                      </select>
+                    </label>
+                  </div>
+
+                  <!-- Right side: controls -->
+                  <div style="display: flex; gap: 0.5rem;" id="vizPlayControls">
+                    <button class="btn-sec" id="btnVizPrev" onclick="stepVisualizer(-1)">Step Back</button>
+                    <button class="btn-step" id="btnVizNext" onclick="stepVisualizer(1)">
+                      Step Forward
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="callout warning">
+                <div class="callout-title">Warning</div>
+                <p>
+                  The most common bug with prefix sums is an off-by-one error. If your prefix array has size <code>n + 1</code> with <code>prefix[0] = 0</code>, then the sum of subarray <code>nums[i..j]</code> is <code>prefix[j + 1] - prefix[i]</code>, not <code>prefix[j] - prefix[i]</code>. Draw it on paper the first few times - it's worth the thirty seconds.
+                </p>
+              </div>
+
+              <div class="section-divider"></div>
+
+              <h2 id="range-queries">Range Sum Queries in O(1)</h2>
+              <p>
+                This is where the prefix sum earns its keep. Once you've built the prefix array, answering "what's the sum of elements from index <code>i</code> to index <code>j</code>?" becomes a single subtraction.
+              </p>
+
+              <div class="code-block">
+                <div class="code-block-header">
+                  <span class="code-block-lang">Python</span>
+                  <button class="copy-btn" onclick="copyCode(this)">
+                    <span class="copy-icon">⧉</span> Copy
+                  </button>
+                </div>
+                <pre><code>def range_sum(prefix, i, j):
+    """Sum of nums[i..j] inclusive, using 0-indexed prefix array."""
+    return prefix[j + 1] - prefix[i]
+
+# Using our earlier prefix: [0, 2, 6, 7, 10, 15]
+# Sum of nums[1..3] = prefix[4] - prefix[1] = 10 - 2 = 8
+# Which is 4 + 1 + 3 = 8 ✓
+
+prefix = [0, 2, 6, 7, 10, 15]
+print(range_sum(prefix, 1, 3))  # 8</code></pre>
+              </div>
+
+              <h3 id="when-to-use-it">When to reach for this pattern</h3>
+              <ul>
+                <li>When you need to compute <strong>subarray sums</strong> or perform range queries repeatedly.</li>
+                <li>When you need to search for subsets or subarrays that equal a specific target.</li>
+                <li>When array values are static (no updates), but queries are extremely frequent.</li>
+              </ul>
+
+              <!-- Section Divider & Problems -->
+              <div class="section-divider"></div>
+              <h2 id="basic-prefix-sum-problems">Practice Problems: Level 1</h2>
+              <div class="practice-problems-grid" style="margin-top: 0;">
+                
+                <!-- Level 1 -->
+                <div class="level-section" style="margin-bottom: 0;">
+                  <div class="problem-level-header">
+                    <span class="level-indicator easy"></span>
+                    <h4>Level 1 - Understand Prefix Sum</h4>
+                  </div>
+                  <p class="level-goal">Goal: Learn to construct a prefix array and answer range-sum queries.</p>
+                  
+                  <div class="problem-item">
+                    <div class="problem-item-title">
+                      <span class="problem-item-name">Running Sum of 1d Array</span>
+                      <span class="diff-pill easy">Easy</span>
+                    </div>
+                    <div class="problem-item-links">
+                      <a href="https://leetcode.com/problems/running-sum-of-1d-array/" target="_blank">LeetCode</a>
+                      <span class="link-sep">·</span>
+                      <a href="https://leetx.voiddev.in/problemsExplained/1480RunningSumOf1dArray.html" target="_blank">Explanation</a>
+                    </div>
+                  </div>
+
+                  <div class="problem-item">
+                    <div class="problem-item-title">
+                      <span class="problem-item-name">Find Pivot Index</span>
+                      <span class="diff-pill easy">Easy</span>
+                    </div>
+                    <div class="problem-item-links">
+                      <a href="https://leetcode.com/problems/find-pivot-index/" target="_blank">LeetCode</a>
+                      <span class="link-sep">·</span>
+                      <a href="https://leetx.voiddev.in/problemsExplained/724FindPivotIndex.html" target="_blank">Explanation</a>
+                    </div>
+                  </div>
+
+                  <div class="problem-item">
+                    <div class="problem-item-title">
+                      <span class="problem-item-name">Range Sum Query - Immutable</span>
+                      <span class="diff-pill easy">Easy</span>
+                    </div>
+                    <div class="problem-item-links">
+                      <a href="https://leetcode.com/problems/range-sum-query-immutable/" target="_blank">LeetCode</a>
+                      <span class="link-sep">·</span>
+                      <a href="https://leetx.voiddev.in/problemsExplained/303RangeSumQueryImmutable.html" target="_blank">Explanation</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Page Navigation -->
+            <div class="page-navigation">
+              <div class="page-nav-prev" style="visibility: hidden;"></div>
+              <a href="prefix-sum-with-hashmap.html" class="page-nav-next">
+                <span class="nav-label">Next</span>
+                <span class="nav-title">Prefix Sum + Hash Map →</span>
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../learn.js"></script>
+</body>
+</html>

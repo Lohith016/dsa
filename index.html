@@ -1,82 +1,98 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Structured DSA Learning — dsa.voiddev.in</title>
+  <title>Structured DSA Learning - dsa.voiddev.in</title>
   <meta name="description" content="Topic-by-topic Data Structures and Algorithms learning path with personal templates, common mistakes, and solved problems.">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
+    /* ===== VARIABLES ===== */
     :root {
-      --bg-primary: #070913;
-      --bg-secondary: #0d1124;
-      --bg-card: #12162e;
-      --bg-card-hover: #181d3d;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(99, 102, 241, 0.4);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --accent: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.15);
-      --easy: #10b981;
-      --medium: #f59e0b;
-      --hard: #ef4444;
-      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --font-display: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-tag: 4px;
+      --radius-card: 8px;
+      --transition: all 0.25s ease;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    [data-theme="light"] {
+      --bg-page: #F7F6F2;
+      --bg-card: #EFEEE9;
+      --bg-card-hover: #E8E7E1;
+      --bg-sub: #E8E7E2;
+      --text-primary: #1A1A1A;
+      --text-secondary: #4A4A48;
+      --text-muted: #8A8A85;
+      --accent: #0D9488;
+      --accent-subtle: rgba(13, 148, 136, 0.08);
+      --border: #E2E0D8;
+      --border-hover: #0D9488;
+      --code-bg: #1C1C1A;
+      --code-text: #E2E0D8;
+      --easy: #10B981;
+      --medium: #F59E0B;
+      --hard: #EF4444;
+      --easy-bg: rgba(16, 185, 129, 0.08);
+      --medium-bg: rgba(245, 158, 11, 0.08);
+      --hard-bg: rgba(239, 68, 68, 0.08);
+      --header-bg: rgba(247, 246, 242, 0.85);
+      --footer-bg: #EFEEE9;
+      --shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
+
+    [data-theme="dark"] {
+      --bg-page: #111110;
+      --bg-card: #191918;
+      --bg-card-hover: #1E1E1D;
+      --bg-sub: #1C1C1A;
+      --text-primary: #F0EFEA;
+      --text-secondary: #A8A8A0;
+      --text-muted: #6B6B64;
+      --accent: #0D9488;
+      --accent-subtle: rgba(13, 148, 136, 0.1);
+      --border: #2A2A27;
+      --border-hover: #0D9488;
+      --code-bg: #1C1C1A;
+      --code-text: #E2E0D8;
+      --easy: #34D399;
+      --medium: #FBBF24;
+      --hard: #F87171;
+      --easy-bg: rgba(52, 211, 153, 0.1);
+      --medium-bg: rgba(251, 191, 36, 0.1);
+      --hard-bg: rgba(248, 113, 113, 0.1);
+      --header-bg: rgba(17, 17, 16, 0.85);
+      --footer-bg: #191918;
+      --shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Outfit', sans-serif;
-      background-color: var(--bg-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.7;
       color: var(--text-primary);
+      background: var(--bg-page);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      position: relative;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Ambient background glows */
-    .bg-glows {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .glow-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(150px);
-      opacity: 0.15;
-    }
-
-    .blob-1 {
-      top: 10%;
-      right: 10%;
-      width: 40vw;
-      height: 40vw;
-      background: radial-gradient(circle, #6366f1, #3b82f6);
-    }
-
-    /* Header */
+    /* ===== HEADER ===== */
     header {
-      background: rgba(7, 9, 19, 0.8);
+      background: var(--header-bg);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
@@ -84,261 +100,356 @@
     }
 
     .header-inner {
-      max-width: 1200px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 0.85rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 800;
-      font-size: 1.3rem;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 15px;
       text-decoration: none;
       color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
-    .logo span {
+    .logo .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .logo .ext {
       color: var(--accent);
     }
 
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+    }
+
     .nav-links a {
-      color: var(--text-secondary);
+      color: var(--text-muted);
       text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 0.95rem;
+      font-size: 13px;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-tag);
       transition: var(--transition);
     }
 
     .nav-links a:hover {
       color: var(--text-primary);
+      background: var(--accent-subtle);
     }
 
-    /* Main Container */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 3rem 2rem;
-      z-index: 10;
-      flex: 1;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      background: rgba(99, 102, 241, 0.1);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      border-radius: 99px;
-      color: var(--accent);
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      background: linear-gradient(to right, #ffffff, #cbd5e1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* Curriculum Grid */
-    .curriculum {
-      display: grid;
-      gap: 2.5rem;
-    }
-
-    .topic-section {
+    .theme-toggle {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2.25rem;
+      border-radius: var(--radius-tag);
+      color: var(--text-muted);
+      font-size: 14px;
+      padding: 0.3rem 0.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+      line-height: 1;
+    }
+
+    .theme-toggle:hover {
+      color: var(--text-primary);
+      border-color: var(--accent);
+    }
+
+    /* ===== MAIN ===== */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 5rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* ===== INTRO ===== */
+    .intro {
+      margin-bottom: 3.5rem;
+    }
+
+    .intro-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-subtle);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-tag);
+      margin-bottom: 1.25rem;
+    }
+
+    .intro h1 {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .intro p {
+      color: var(--text-secondary);
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 640px;
+    }
+
+    .intro-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .intro-stat {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .intro-stat strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .intro-sep {
+      width: 3px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 50%;
+    }
+
+    /* ===== CURRICULUM GRID ===== */
+    .curriculum {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    /* ===== TOPIC CARD ===== */
+    .topic-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 2rem;
       transition: var(--transition);
     }
 
-    .topic-section:hover {
+    .topic-card:hover {
       border-color: var(--border-hover);
-      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.05);
+      box-shadow: var(--shadow);
     }
 
+    .topic-card.upcoming {
+      opacity: 0.55;
+    }
+
+    .topic-card.upcoming:hover {
+      opacity: 0.75;
+      border-color: var(--accent);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+    }
+
+    /* Topic Header */
     .topic-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+      gap: 1rem;
     }
 
-    .topic-title-wrap h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .topic-meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
+    .topic-number {
+      font-family: var(--font-mono);
+      font-size: 11px;
       color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
     }
 
-    .topic-solved-badge {
-      font-size: 0.8rem;
-      background: rgba(16, 185, 129, 0.1);
+    .topic-header h2 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .topic-badge {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-tag);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 0.2rem;
+    }
+
+    .topic-badge.solved {
+      background: var(--easy-bg);
       color: var(--easy);
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 600;
+    }
+
+    .topic-badge.locked {
+      background: var(--bg-sub);
+      color: var(--text-muted);
+    }
+
+    .topic-badge.learning {
+      background: var(--accent-subtle);
+      color: var(--accent);
     }
 
     .topic-desc {
       color: var(--text-secondary);
-      line-height: 1.6;
+      font-size: 14.5px;
+      line-height: 1.65;
       margin-bottom: 1.5rem;
     }
 
-    /* Subsection grid */
+    /* Sub-boxes */
     .section-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    @media (max-width: 768px) {
-      .section-grid {
-        grid-template-columns: 1fr;
-      }
+      gap: 1rem;
+      margin-bottom: 1.25rem;
     }
 
     .sub-box {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      border-radius: 12px;
-      padding: 1.25rem;
+      background: var(--bg-sub);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 1.1rem;
     }
 
     .sub-box h4 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
       color: var(--text-primary);
+      margin-bottom: 0.6rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .sub-box p, .sub-box ul {
-      font-size: 0.9rem;
+      font-size: 13px;
       color: var(--text-secondary);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .sub-box ul {
-      padding-left: 1.25rem;
+      padding-left: 1.1rem;
     }
 
     .sub-box li {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
-    /* Code Template box */
+    /* Code Template */
     .code-template {
-      background: #090b14;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
+      background: var(--code-bg);
+      border-radius: var(--radius-card);
+      padding: 1.1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
       overflow-x: auto;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--code-text);
     }
 
-    .code-template pre {
-      color: #94a3b8;
-    }
+    .hl-keyword { color: #C084FC; }
+    .hl-fn { color: #38BDF8; }
+    .hl-comment { color: #525250; font-style: italic; }
+    .hl-number { color: #FB923C; }
+    .hl-var { color: #E2E0D8; }
 
-    .code-keyword { color: #f472b6; }
-    .code-fn { color: #38bdf8; }
-    .code-comment { color: #64748b; font-style: italic; }
-
-    /* Related Problems */
+    /* Problems */
     .problems-list {
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
     }
 
     .problems-title {
-      font-size: 0.95rem;
+      font-size: 11px;
       font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
     }
 
     .problem-link {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
+      background: var(--bg-sub);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 0.65rem 1rem;
       text-decoration: none;
       color: var(--text-primary);
-      font-size: 0.95rem;
+      font-size: 13.5px;
       transition: var(--transition);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .problem-link:hover {
-      background: rgba(99, 102, 241, 0.05);
-      border-color: var(--border-hover);
+      border-color: var(--accent);
+      background: var(--accent-subtle);
     }
 
     .problem-meta-cell {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.65rem;
     }
 
     .diff-pill {
-      font-size: 0.75rem;
+      font-size: 10px;
       font-weight: 600;
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
+      padding: 0.1rem 0.4rem;
+      border-radius: var(--radius-tag);
     }
 
-    .diff-pill.easy {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--easy);
-    }
+    .diff-pill.easy { background: var(--easy-bg); color: var(--easy); }
+    .diff-pill.medium { background: var(--medium-bg); color: var(--medium); }
+    .diff-pill.hard { background: var(--hard-bg); color: var(--hard); }
 
-    .diff-pill.medium {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--medium);
-    }
-
-    .problem-name {
-      font-weight: 500;
-    }
+    .problem-name { font-weight: 500; }
 
     .arrow-right {
       color: var(--text-muted);
+      font-size: 14px;
       transition: var(--transition);
     }
 
@@ -347,15 +458,55 @@
       transform: translateX(3px);
     }
 
-    /* Footer */
+    /* Learn link */
+    .learn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 1rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid transparent;
+      transition: var(--transition);
+    }
+
+    .learn-link:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    .learn-link .arrow {
+      transition: transform 150ms ease;
+    }
+
+    .learn-link:hover .arrow {
+      transform: translateX(3px);
+    }
+
+    /* ===== UPCOMING TOPIC (minimal) ===== */
+    .upcoming-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .upcoming-desc {
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+    }
+
+    /* ===== FOOTER ===== */
     footer {
       text-align: center;
-      padding: 2.5rem;
+      padding: 2rem;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 13px;
       border-top: 1px solid var(--border);
-      background: #090b14;
-      z-index: 10;
+      background: var(--footer-bg);
     }
 
     footer a {
@@ -366,151 +517,252 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-inner { padding: 0.75rem 1.25rem; }
+
+      .nav-links { display: none; }
+
+      .container { padding: 2.5rem 1.25rem 4rem; }
+
+      .intro h1 { font-size: 28px; }
+
+      .section-grid { grid-template-columns: 1fr; }
+
+      .topic-card { padding: 1.5rem; }
+
+      .topic-header h2 { font-size: 18px; }
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    ::selection {
+      background: rgba(13, 148, 136, 0.25);
+      color: var(--text-primary);
+    }
   </style>
 </head>
 <body>
 
-  <div class="bg-glows" aria-hidden="true">
-    <div class="glow-blob blob-1"></div>
-  </div>
-
   <!-- Header -->
   <header>
     <div class="header-inner">
-      <a href="https://voiddev.in" class="logo">voiddev<span>.dsa</span></a>
-      <nav class="nav-links">
-        <a href="https://voiddev.in">Hub</a>
-        <a href="https://info.voiddev.in">Portfolio</a>
-        <a href="https://leetx.voiddev.in">LeetCode</a>
-        <a href="https://learn-langchain.voiddev.in">AI Agents</a>
-      </nav>
+      <a href="index.html" class="logo">
+        <span class="dot"></span>
+        dsa<span class="ext">.voiddev.in</span>
+      </a>
+      <div class="header-right">
+        <nav class="nav-links">
+          <a href="https://info.voiddev.in">Portfolio</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Container -->
+  <!-- Main -->
   <div class="container">
-    <section class="hero">
-      <span class="hero-badge">DSA STUDY PLAN</span>
+
+    <!-- Intro -->
+    <section class="intro">
+      <span class="intro-badge">DSA Study Plan</span>
       <h1>Structured DSA Guide</h1>
-      <p>My personal topic-by-topic learning path. Focused on recognizing patterns, writing clean code templates, and avoiding common mistakes.</p>
+      <p>My personal topic-by-topic path where I learn and document DSA patterns. Focused on recognizing patterns, writing clean code templates, and avoiding common mistakes.</p>
+      <div class="intro-meta">
+        <span class="intro-stat"><strong>15</strong>&nbsp;patterns</span>
+        <span class="intro-sep"></span>
+        <span class="intro-stat"><strong>1</strong>&nbsp;problem solved</span>
+        <span class="intro-sep"></span>
+        <span class="intro-stat"><strong>1</strong>&nbsp;of 15 started</span>
+      </div>
     </section>
 
-    <!-- Topic Curriculum -->
+    <!-- Topics -->
     <div class="curriculum">
-      
-      <!-- Topic 1: Arrays & Prefix Sums -->
-      <section class="topic-section">
-        <div class="topic-header">
-          <div class="topic-title-wrap">
-            <h2>Arrays &amp; Prefix Sums</h2>
-            <div class="topic-meta">Topic 01 • Accumulators &amp; Offsets</div>
-          </div>
-          <span class="topic-solved-badge">1 Solved</span>
-        </div>
-        <p class="topic-desc">
-          Prefix sums are an essential tool for O(1) query-based subarray computations. By storing cumulative values, we can answer range sum queries in constant time.
-        </p>
 
-        <div class="section-grid">
-          <div class="sub-box">
-            <h4>🔍 Recognition Pattern</h4>
-            <p>Use this when asked for sum or differences of subarrays, especially if you need to calculate left-side vs right-side cumulative totals repeatedly.</p>
+      <!-- Topic 01: Prefix Sum -->
+      <section class="topic-card upcoming" style="cursor:pointer;" onclick="window.location.href='prefix-sum/basic-prefix-sum.html'; localStorage.setItem('dsa-last-visited-topic', 'prefix-sum'); localStorage.setItem('dsa-last-visited-page', 'prefix-sum/basic-prefix-sum.html');" data-topic-id="prefix-sum">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 01 · Accumulators &amp; Offsets</div>
+            <h2>Prefix Sum Pattern</h2>
           </div>
-          <div class="sub-box">
-            <h4>⚠️ Common Pitfalls</h4>
-            <ul>
-              <li>Index out of bounds on margins (use sizes of N+1 or handle index 0 explicitly).</li>
-              <li>Neglecting off-by-one calculations on left/right boundaries.</li>
-            </ul>
-          </div>
+          <span class="topic-badge in-progress" style="background: var(--accent-subtle); color: var(--accent); padding: 0.35rem 0.75rem; border-radius: var(--radius-tag); font-size: 13px; font-weight: 500;">In Progress</span>
         </div>
-
-        <div class="code-template">
-          <span class="code-comment"># Prefix Sum Computation Template</span><br>
-          <span class="code-keyword">def</span> <span class="code-fn">compute_prefix_sums</span>(nums):<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;n = <span class="code-fn">len</span>(nums)<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;prefix = [0] * (n + 1)<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">for</span> i <span class="code-keyword">in</span> <span class="code-fn">range</span>(n):<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prefix[i + 1] = prefix[i] + nums[i]<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> prefix
-        </div>
-
-        <div class="problems-list">
-          <div class="problems-title">Solved Explanations</div>
-          <a href="https://leetx.voiddev.in/problemsExplained/2574LeftAndRightSumDifferences.html" class="problem-link" target="_blank">
-            <div class="problem-meta-cell">
-              <span class="diff-pill medium">Medium</span>
-              <span class="problem-name">2574. Left and Right Sum Differences</span>
-            </div>
-            <span class="arrow-right">&rarr;</span>
-          </a>
-        </div>
+        <p class="upcoming-desc">Prefix sums are an essential tool for O(1) query-based subarray computations. By storing cumulative values, we can answer range sum queries in constant time.</p>
       </section>
 
-      <!-- Topic 2: Two Pointers & Sorting -->
-      <section class="topic-section">
-        <div class="topic-header">
-          <div class="topic-title-wrap">
-            <h2>Two Pointers &amp; Sorting</h2>
-            <div class="topic-meta">Topic 02 • Sliding &amp; Converging Bounds</div>
+      <!-- Topic 02: Two Pointers -->
+      <section class="topic-card upcoming" onclick="goToTopic('two-pointers')" data-topic-id="two-pointers">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 02 · Sliding &amp; Converging Bounds</div>
+            <h2>Two Pointers Pattern</h2>
           </div>
-          <span class="topic-solved-badge">1 Solved</span>
+          <span class="topic-badge locked">Upcoming</span>
         </div>
-        <p class="topic-desc">
-          Sorting the array simplifies many search problems, enabling two converging pointers to sweep from opposite directions to locate elements satisfying constraints (e.g. sums) in O(N) time.
-        </p>
-
-        <div class="section-grid">
-          <div class="sub-box">
-            <h4>🔍 Recognition Pattern</h4>
-            <p>Look for terms like "triplet sum", "pair sum", "find three numbers", or search problems in sorted inputs where elements can be skipped to avoid duplicate comparisons.</p>
-          </div>
-          <div class="sub-box">
-            <h4>⚠️ Common Pitfalls</h4>
-            <ul>
-              <li>Forgetting to sort the array first.</li>
-              <li>Including duplicate elements in the results (always increment pointers past duplicate values).</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="code-template">
-          <span class="code-comment"># Converging Two-Pointer Template</span><br>
-          nums.<span class="code-fn">sort</span>()<br>
-          left, right = 0, <span class="code-fn">len</span>(nums) - 1<br>
-          <span class="code-keyword">while</span> left &lt; right:<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;curr_sum = nums[left] + nums[right]<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> curr_sum == target:<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Match found!</span><br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left += 1<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">elif</span> curr_sum &lt; target:<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left += 1<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">else</span>:<br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right -= 1
-        </div>
-
-        <div class="problems-list">
-          <div class="problems-title">Solved Explanations</div>
-          <a href="https://leetx.voiddev.in/problemsExplained/153sum.html" class="problem-link" target="_blank">
-            <div class="problem-meta-cell">
-              <span class="diff-pill medium">Medium</span>
-              <span class="problem-name">15. 3Sum</span>
-            </div>
-            <span class="arrow-right">&rarr;</span>
-          </a>
-        </div>
+        <p class="upcoming-desc">Use converging pointers scanning from opposite sides or same-direction runners to solve search/sum constraints in linear time.</p>
       </section>
 
-      <!-- Placeholder Topics for future weeks -->
-      <section class="topic-section" style="opacity: 0.6;">
-        <div class="topic-header">
-          <div class="topic-title-wrap">
-            <h2>Sliding Window</h2>
-            <div class="topic-meta">Topic 03 • Subarray Bounds</div>
+      <!-- Topic 03: Sliding Window -->
+      <section class="topic-card upcoming" onclick="goToTopic('sliding-window')" data-topic-id="sliding-window">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 03 · Subarray Bounds</div>
+            <h2>Sliding Window Pattern</h2>
           </div>
-          <span class="topic-solved-badge" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">Locked</span>
+          <span class="topic-badge locked">Upcoming</span>
         </div>
-        <p class="topic-desc">Coming next week! Learn how to optimize nested O(N²) loops into a linear O(N) sweep by maintaining dynamic window boundaries.</p>
+        <p class="upcoming-desc">Optimize nested O(N²) loops into a linear O(N) sweep by maintaining dynamic window boundaries.</p>
+      </section>
+
+      <!-- Topic 04: Fast & Slow Pointers -->
+      <section class="topic-card upcoming" onclick="goToTopic('fast-slow-pointers')" data-topic-id="fast-slow-pointers">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 04 · Cycle Detection</div>
+            <h2>Fast &amp; Slow Pointers</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Use two pointers moving at different speeds to detect cycles, find midpoints, and solve linked list problems elegantly.</p>
+      </section>
+
+      <!-- Topic 05: Linked List Reversal -->
+      <section class="topic-card upcoming" onclick="goToTopic('ll-reversal')" data-topic-id="ll-reversal">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 05 · Pointer Rewiring</div>
+            <h2>Linked List In-Place Reversal</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Reverse linked lists or sub-sections in-place by carefully rewiring next pointers without extra space.</p>
+      </section>
+
+      <!-- Topic 06: Monotonic Stack -->
+      <section class="topic-card upcoming" onclick="goToTopic('monotonic-stack')" data-topic-id="monotonic-stack">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 06 · Ordered Elimination</div>
+            <h2>Monotonic Stack Pattern</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Maintain a stack of increasing or decreasing elements to efficiently find next greater/smaller elements in O(N).</p>
+      </section>
+
+      <!-- Topic 07: Top K Elements -->
+      <section class="topic-card upcoming" onclick="goToTopic('top-k')" data-topic-id="top-k">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 07 · Heaps &amp; Selection</div>
+            <h2>Top K Elements Pattern</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Use heaps or quickselect to efficiently find the k largest, smallest, or most frequent elements.</p>
+      </section>
+
+      <!-- Topic 08: Overlapping Intervals -->
+      <section class="topic-card upcoming" onclick="goToTopic('overlapping-intervals')" data-topic-id="overlapping-intervals">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 08 · Merge &amp; Intersect</div>
+            <h2>Overlapping Intervals Pattern</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Sort intervals by start time and use greedy merging or sweepline techniques to handle overlaps.</p>
+      </section>
+
+      <!-- Topic 09: Modified Binary Search -->
+      <section class="topic-card upcoming" onclick="goToTopic('binary-search')" data-topic-id="binary-search">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 09 · Search Space Reduction</div>
+            <h2>Modified Binary Search Pattern</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Apply binary search to rotated arrays, answer spaces, and non-trivial search domains beyond sorted arrays.</p>
+      </section>
+
+      <!-- Topic 10: Binary Tree Traversal -->
+      <section class="topic-card upcoming" onclick="goToTopic('tree-traversal')" data-topic-id="tree-traversal">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 10 · Tree Walking</div>
+            <h2>Binary Tree Traversal</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Master inorder, preorder, postorder, and level-order traversals - the building blocks of all tree problems.</p>
+      </section>
+
+      <!-- Topic 11: DFS -->
+      <section class="topic-card upcoming" onclick="goToTopic('dfs')" data-topic-id="dfs">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 11 · Deep Exploration</div>
+            <h2>Depth First Search (DFS)</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Explore as deep as possible before backtracking - works on trees, graphs, and implicit state spaces.</p>
+      </section>
+
+      <!-- Topic 12: BFS -->
+      <section class="topic-card upcoming" onclick="goToTopic('bfs')" data-topic-id="bfs">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 12 · Level-by-Level</div>
+            <h2>Breadth First Search (BFS)</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Explore neighbors first using a queue - ideal for shortest path, level-order, and multi-source problems.</p>
+      </section>
+
+      <!-- Topic 13: Matrix Traversal -->
+      <section class="topic-card upcoming" onclick="goToTopic('matrix')" data-topic-id="matrix">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 13 · Grid Navigation</div>
+            <h2>Matrix Traversal Pattern</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Apply DFS/BFS to 2D grids for flood fill, island counting, shortest paths, and connected component problems.</p>
+      </section>
+
+      <!-- Topic 14: Backtracking -->
+      <section class="topic-card upcoming" onclick="goToTopic('backtracking')" data-topic-id="backtracking">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 14 · Exhaustive Search</div>
+            <h2>Backtracking</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Systematically explore all possibilities by building candidates and pruning invalid paths early.</p>
+      </section>
+
+      <!-- Topic 15: Dynamic Programming -->
+      <section class="topic-card upcoming" onclick="goToTopic('dp')" data-topic-id="dp">
+        <div class="upcoming-inner">
+          <div>
+            <div class="topic-number">Topic 15 · Optimal Substructure</div>
+            <h2>Dynamic Programming (DP)</h2>
+          </div>
+          <span class="topic-badge locked">Upcoming</span>
+        </div>
+        <p class="upcoming-desc">Break problems into overlapping subproblems and cache results - the most powerful pattern for optimization.</p>
       </section>
 
     </div>
@@ -518,8 +770,76 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 voiddev. Built with ❤️ and pair-programmed with <a href="https://deepmind.google" target="_blank">Antigravity</a>.</p>
+    <p style="font-size: 12px; color: var(--text-muted);">This guide is an active work-in-progress and may contain mistakes. If you spot one, please report it at <a href="mailto:report@voiddev.in" style="color: var(--accent); text-decoration: none;">report@voiddev.in</a></p>
+    <p style="font-size: 12px; margin-top: 0.25rem; color: var(--text-muted);">Got suggestions or think my code is garbage? Roast it at <a href="mailto:suggestions@voiddev.in" style="color: var(--accent); text-decoration: none;">suggestions@voiddev.in</a></p>
   </footer>
+
+  <script>
+    /* ===== THEME ===== */
+    (function () {
+      const stored = localStorage.getItem('dsa-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+      updateIcon(theme);
+    })();
+
+    function updateIcon(theme) {
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.innerHTML = theme === 'dark' ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+    }
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('dsa-theme', next);
+      updateIcon(next);
+    });
+
+    function goToTopic(topicId) {
+      localStorage.setItem('dsa-last-visited-topic', topicId);
+      if (topicId === 'prefix-sum') {
+        const lastPage = localStorage.getItem('dsa-last-visited-page') || 'basic-prefix-sum.html';
+        window.location.href = lastPage;
+      } else {
+        window.location.href = `coming-soon.html?topic=${topicId}`;
+      }
+    }
+
+    // Dynamic injection of Last Visited badge on load
+    (function () {
+      const lastVisited = localStorage.getItem('dsa-last-visited-topic');
+      if (lastVisited) {
+        const card = document.querySelector(`.topic-card[data-topic-id="${lastVisited}"]`);
+        if (card) {
+          const header = card.querySelector('.topic-header') || card.querySelector('.upcoming-inner');
+          if (header) {
+            const badge = document.createElement('span');
+            badge.className = 'topic-badge';
+            badge.style.background = 'rgba(13, 148, 136, 0.1)';
+            badge.style.color = 'var(--accent)';
+            badge.style.border = '1px solid var(--accent)';
+            badge.style.fontSize = '10px';
+            badge.style.fontWeight = '500';
+            badge.style.padding = '0.2rem 0.55rem';
+            badge.style.borderRadius = 'var(--radius-tag)';
+            badge.style.textTransform = 'uppercase';
+            badge.style.marginRight = '0.5rem';
+            badge.style.display = 'inline-block';
+            badge.textContent = 'Last Visited';
+            
+            const statusBadge = header.querySelector('.topic-badge');
+            if (statusBadge) {
+              header.insertBefore(badge, statusBadge);
+            } else {
+              header.appendChild(badge);
+            }
+          }
+        }
+      }
+    })();
+  </script>
 
 </body>
 </html>
