@@ -23,14 +23,45 @@ document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
 
-  if (menuToggle && sidebar && overlay) {
+  function openSidebar() {
+    if (sidebar) sidebar.classList.add('open');
+    if (overlay) overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  if (menuToggle) {
     menuToggle.addEventListener('click', () => {
-      sidebar.classList.add('open');
-      overlay.classList.add('visible');
+      if (sidebar && sidebar.classList.contains('open')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
     });
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('visible');
+  }
+
+  if (overlay) {
+    overlay.addEventListener('click', closeSidebar);
+  }
+
+  // Close button inside sidebar
+  const sidebarClose = document.getElementById('sidebarClose');
+  if (sidebarClose) {
+    sidebarClose.addEventListener('click', closeSidebar);
+  }
+
+  // Close sidebar when clicking a nav link (mobile) - uses event delegation
+  if (sidebar) {
+    sidebar.addEventListener('click', (e) => {
+      const link = e.target.closest('a');
+      if (link && window.innerWidth <= 768) {
+        closeSidebar();
+      }
     });
   }
 
@@ -254,40 +285,82 @@ function setupPageScrollSpyAndTOC() {
   const path = window.location.pathname;
   let filename = path.substring(path.lastIndexOf('/') + 1) || 'basic-prefix-sum.html';
 
-  let tocHTML = '';
-  if (filename.startsWith('basic-prefix-sum.html')) {
-    tocPanel.style.display = 'block';
-    tocHTML = `
-      <li><a href="#what-is-prefix-sum" class="active">What is a Prefix Sum?</a></li>
-      <li><a href="#building-the-prefix-array">Building the Prefix Array</a></li>
-      <li><a href="#range-queries">Range Sum Queries in O(1)</a></li>
-      <li><a href="#basic-prefix-sum-problems">Practice Problems</a></li>
-    `;
-  } else if (filename.startsWith('prefix-sum-with-hashmap.html')) {
-    tocPanel.style.display = 'block';
-    tocHTML = `
-      <li><a href="#page-prefix-sum-with-hashmap" class="active">Prefix Sum + Hash Map</a></li>
-    `;
-  } else if (filename.startsWith('2d-prefix-sum.html')) {
-    tocPanel.style.display = 'block';
-    tocHTML = `
-      <li><a href="#page-2d-prefix-sum" class="active">2D Prefix Sum</a></li>
-    `;
-  } else if (filename.startsWith('difference-array.html')) {
-    tocPanel.style.display = 'block';
-    tocHTML = `
-      <li><a href="#page-difference-array" class="active">Difference Array</a></li>
-      <li><a href="#difference-array-problems">Practice Problems</a></li>
-    `;
-  } else {
-    tocPanel.style.display = 'none';
+  const tocItemsMap = {
+    'basic-prefix-sum.html': [
+      { id: 'what-is-prefix-sum', text: 'What is a Prefix Sum?' },
+      { id: 'building-the-prefix-array', text: 'Building the Prefix Array' },
+      { id: 'range-queries', text: 'Range Sum Queries in O(1)' },
+      { id: 'basic-prefix-sum-problems', text: 'Practice Problems' }
+    ],
+    'prefix-sum-with-hashmap.html': [
+      { id: 'page-prefix-sum-with-hashmap', text: 'Prefix Sum + Hash Map' }
+    ],
+    '2d-prefix-sum.html': [
+      { id: 'page-2d-prefix-sum', text: '2D Prefix Sum' }
+    ],
+    'difference-array.html': [
+      { id: 'page-difference-array', text: 'Difference Array' },
+      { id: 'difference-array-problems', text: 'Practice Problems' }
+    ]
+  };
+
+  let pageKey = null;
+  for (const key in tocItemsMap) {
+    if (filename.startsWith(key)) {
+      pageKey = key;
+      break;
+    }
   }
 
-  tocList.innerHTML = tocHTML;
+  let tocHTML = '';
+  if (pageKey) {
+    tocPanel.style.display = ''; // Clear inline style to allow CSS media queries
+    const items = tocItemsMap[pageKey];
+    
+    tocHTML = items.map((item, idx) => `
+      <li><a href="#${item.id}" class="${idx === 0 ? 'active' : ''}">${item.text}</a></li>
+    `).join('');
+
+    const sidebarTocHTML = items.map((item, idx) => `
+      <li class="sidebar-toc-item"><a href="#${item.id}" class="${idx === 0 ? 'active' : ''}">${item.text}</a></li>
+    `).join('');
+
+    tocList.innerHTML = tocHTML;
+
+    // Mobile sidebar toc population
+    const sidebarNav = document.getElementById('sidebarNav');
+    if (sidebarNav) {
+      const existingSidebarToc = document.getElementById('sidebarTocGroup');
+      if (existingSidebarToc) {
+        existingSidebarToc.remove();
+      }
+
+      const tocGroup = document.createElement('div');
+      tocGroup.className = 'nav-group mobile-only-toc';
+      tocGroup.id = 'sidebarTocGroup';
+      
+      tocGroup.innerHTML = `
+        <button class="nav-group-title" onclick="toggleGroup(this)">
+          On This Page
+          <span class="chevron">▾</span>
+        </button>
+        <ul class="nav-items">
+          ${sidebarTocHTML}
+        </ul>
+      `;
+      sidebarNav.insertBefore(tocGroup, sidebarNav.firstChild);
+    }
+  } else {
+    tocPanel.style.display = 'none';
+    const existingSidebarToc = document.getElementById('sidebarTocGroup');
+    if (existingSidebarToc) {
+      existingSidebarToc.remove();
+    }
+  }
 
   // Build headings map for scrollspy
   spyHeadings.length = 0;
-  const links = tocList.querySelectorAll('a');
+  const links = document.querySelectorAll('#tocList a, #sidebarTocGroup a');
   links.forEach(link => {
     const href = link.getAttribute('href');
     if (href && href.startsWith('#')) {
@@ -310,6 +383,7 @@ function setupPageScrollSpyAndTOC() {
   });
 
   if (spyHeadings.length > 0) {
+    window.removeEventListener('scroll', updateScrollSpy);
     window.addEventListener('scroll', updateScrollSpy, { passive: true });
     updateScrollSpy();
   }
@@ -327,11 +401,15 @@ function updateScrollSpy() {
     }
   }
 
-  const tocList = document.getElementById('tocList');
-  if (tocList) {
-    tocList.querySelectorAll('a').forEach(l => l.classList.remove('active'));
+  // Clear active class from all desktop and mobile TOC links
+  document.querySelectorAll('#tocList a, #sidebarTocGroup a').forEach(l => l.classList.remove('active'));
+  
+  if (current) {
+    const activeHref = current.link.getAttribute('href');
+    document.querySelectorAll(`#tocList a[href="${activeHref}"], #sidebarTocGroup a[href="${activeHref}"]`).forEach(l => {
+      l.classList.add('active');
+    });
   }
-  if (current) current.link.classList.add('active');
 }
 
 /* ===== COPY CODE BUTTON ===== */

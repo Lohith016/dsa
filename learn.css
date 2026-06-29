@@ -132,13 +132,36 @@
 
     /* ===== SIDEBAR OVERLAY (mobile) ===== */
     .sidebar-overlay {
-      display: none;
       position: fixed;
       inset: 0;
       background: var(--overlay);
       z-index: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 250ms ease;
     }
-    .sidebar-overlay.active { display: block; }
+    .sidebar-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Close button inside sidebar (mobile only) */
+    .sidebar-close {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 10;
+      transition: color 200ms;
+    }
+    .sidebar-close:hover { color: var(--text-primary); }
 
     /* ===== LEFT SIDEBAR ===== */
     .sidebar {
@@ -469,6 +492,7 @@
       display: flex;
       justify-content: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .content-wrapper, .layout-main {
@@ -476,6 +500,7 @@
       width: 100%;
       max-width: calc(var(--content-max) + var(--toc-w) + 4rem);
       padding: 0 2rem;
+      min-width: 0;
     }
 
     /* ===== MAIN CONTENT ===== */
@@ -483,6 +508,9 @@
       flex: 1;
       max-width: var(--content-max);
       padding: 1.5rem 0 6rem;
+      min-width: 0;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
 
     .topic-title {
@@ -492,6 +520,8 @@
       line-height: 1.2;
       color: var(--text-primary);
       margin-bottom: 1rem;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
 
     .meta-row {
@@ -543,12 +573,22 @@
       line-height: 1.7;
       color: var(--text-secondary);
       margin-bottom: 2.5rem;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
 
     /* Body content */
+    .content-body {
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      min-width: 0;
+    }
+
     .content-body p {
       margin-bottom: 1.5rem;
       color: var(--text-secondary);
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
 
     .content-body h2 {
@@ -603,6 +643,8 @@
       padding: 0.15rem 0.4rem;
       border-radius: 3px;
       color: var(--text-primary);
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     /* Code blocks */
@@ -736,6 +778,8 @@
       flex-direction: column;
       gap: 1.5rem;
       margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
     }
     
     .array-row {
@@ -754,7 +798,7 @@
     .array-cells {
       display: flex;
       gap: 0.4rem;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
     }
     .array-cell {
       width: 44px;
@@ -915,6 +959,8 @@
       padding: 1rem 1.25rem;
       margin: 1.5rem 0 2rem;
       border-radius: 0 var(--radius-tag) var(--radius-tag) 0;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
 
     .callout-title {
@@ -981,6 +1027,12 @@
       width: var(--toc-w);
       flex-shrink: 0;
       padding-left: 2rem;
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      padding-top: 3rem;
+      max-height: 100vh;
+      overflow-y: auto;
     }
 
     .toc-sticky {
@@ -989,7 +1041,7 @@
       padding-top: 3rem;
     }
 
-    .toc-label {
+    .toc-title, .toc-label {
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
@@ -1351,35 +1403,168 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
-      .toc-panel { display: none; }
-      .content-wrapper { max-width: var(--content-max); }
+      .toc-panel { display: none !important; }
+      .content-wrapper, .layout-main { max-width: var(--content-max); }
     }
 
     @media (max-width: 768px) {
-      .mobile-topbar { display: flex; }
+      /* Show mobile header bar */
+      .mobile-topbar, .mobile-header { display: flex; }
 
+      /* Hide sidebar off-screen by default */
       .sidebar {
         transform: translateX(-100%);
         transition: transform 250ms ease;
+        position: fixed;
       }
-
       .sidebar.open { transform: translateX(0); }
 
+      /* Show close button inside sidebar */
+      .sidebar-close { display: block; }
+
+      /* Remove sidebar margin from layout */
       .layout, .layout-container {
         margin-left: 0;
       }
 
       .content-wrapper, .layout-main {
-        padding: 0 1.25rem;
+        padding: 0 1rem;
       }
 
       .main-content, .content-area {
         padding: 1rem 0 4rem;
       }
 
-      .topic-title { font-size: 28px; }
+      .topic-title { font-size: 24px; }
+      .content-body h2 { font-size: 18px; }
+      .content-body h3 { font-size: 16px; }
 
-      .content-body h2 { font-size: 20px; }
+      /* Prevent horizontal overflow on the whole page */
+      html, body {
+        overflow-x: hidden;
+      }
+
+      /* Code blocks: horizontal scroll */
+      .code-block { overflow-x: auto; }
+      .code-block pre { max-width: 100%; }
+
+      /* Visualizer mobile fixes */
+      .visualizer-container {
+        padding: 1rem;
+      }
+
+      .visualizer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .visualizer-tabs {
+        width: 100%;
+      }
+      .visualizer-tab-btn {
+        flex: 1;
+        text-align: center;
+      }
+
+      .array-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+      .array-label {
+        width: auto;
+        text-align: left;
+      }
+      .array-cells {
+        overflow-x: auto;
+        max-width: 100%;
+        padding-bottom: 1.2rem;
+      }
+      .array-cell {
+        width: 38px;
+        height: 38px;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      .visualizer-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      .input-setup-row {
+        flex-wrap: wrap;
+      }
+      .array-input {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .formula-explanation {
+        font-size: 11px;
+        padding: 0.75rem;
+      }
+
+      /* Callout boxes */
+      .callout {
+        padding: 0.75rem 1rem;
+      }
+
+      /* Page navigation */
+      .page-navigation {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      /* Problem items */
+      .problem-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
+
+      /* Hook paragraph */
+      .hook {
+        font-size: 15px;
+      }
+    }
+
+    /* ===== MOBILE HEADER BAR (class used in HTML) ===== */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-header .menu-toggle {
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      line-height: 1;
+    }
+
+    .mobile-header .mobile-brand {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .mobile-header .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* ===== SCROLLBAR ===== */
@@ -1431,4 +1616,30 @@
     
     .toast-notification button:hover {
       color: var(--text-primary);
+    }
+    
+    /* ===== MOBILE SIDEBAR TOC ===== */
+    .mobile-only-toc {
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      .mobile-only-toc {
+        display: block;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .sidebar-toc-item a {
+        padding-left: 2rem;
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+      
+      .sidebar-toc-item a.active {
+        color: var(--accent);
+        border-left-color: var(--accent);
+        padding-left: 2.25rem;
+      }
     }
